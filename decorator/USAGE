@@ -2,7 +2,7 @@ Description:
     Creates a new AngularJS decorator for a specified service
 
 Example:
-    yo angularify:decorator serviceName
+    yo angularify:decorator servicename
 
     This will create:
-        app/scripts/decorators/serviceNameDecorator.js
+        app/scripts/decorators/servicenamedecorator.js

@@ -159,12 +159,16 @@ gulp.task('watch', ['lint'], function () {
     // Start live reload
     refresh.listen(livereloadport);
 
-    // Watch our scripts, and when they change run lint and requirejs
-    gulp.watch(['bower_components/**/*.js', 'bower_components/**/release/*.js', 'app/*.js', 'app/scripts/**/*.js','app/scripts/**/**/*.js'], [
+    // Watch bower scripts, and when they change run lint and requirejs
+    gulp.watch(['bower_components/**/*.js', 'bower_components/**/release/*.js'], [
         'rjs'
     ]);
+
+    //watch our scripts, and when they change run lint and requirejs
+    gulp.watch(['app/*.js', 'app/scripts/**/*.js','app/scripts/controllers/**/*.js'], ['rjs']);
+
     // Watch our sass files
-    gulp.watch(['app/styles/**/*.scss','app/styles/**/*.css'], [
+    gulp.watch(['app/styles/*.scss','app/styles/*.css','app/styles/**/*.scss','app/styles/**/*.css'], [
         'inject'
     ]);
 

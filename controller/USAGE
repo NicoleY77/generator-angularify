@@ -5,4 +5,4 @@ Example:
     yo angularify:controller Thing
 
     This will create:
-        app/scripts/controllers/thing.js
+        app/scripts/controllers/thing/thing.js

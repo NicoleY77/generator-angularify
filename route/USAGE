@@ -5,7 +5,7 @@ Example:
     yo angularify:route thing  [--uri=path_to/thing]
 
     This will create:
-        app/scripts/controllers/thing.js
-        app/views/thing.html
+        app/scripts/controllers/thing/thing.js
+        app/views/thing/thing.html
     And add routing to:
         app.js
