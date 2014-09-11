@@ -1,0 +1,33 @@
+{
+    "node": false,
+    "browser": true,
+    "devel": true,
+    "esnext": true,
+    "bitwise": true,
+    "camelcase": true,
+    "curly": true,
+    "eqeqeq": true,
+    "immed": true,
+    "indent": 2,
+    "latedef": true,
+    "newcap": true,
+    "noarg": true,
+    "regexp": true,
+    "undef": true,
+    "debug": true,
+    "unused": false,
+    "globalstrict": true,
+    "trailing": true,
+    "smarttabs": true,
+    "asi": true,
+    "laxcomma": true,
+    "laxbreak": true,
+    "predef": ["define", "require"],
+    "globals": {
+        "angular": false,
+        "ngRoutes": false,
+        "ngSanitize": false,
+        "ngCookies": false,
+        "ngResource": false
+    }
+}

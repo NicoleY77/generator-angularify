@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>generator-angularify</title>
+    <!-- inject:css -->
+    <!-- endinject -->
+</head>
+<body>
+<ul class="nav nav-tabs" role="tablist">
+    <li ng-class="{active: $state.includes('home')}"><a ui-sref="home">Home</a></li>
+    <li ng-class="{active: $state.includes('about')}"><a ui-sref="about">about</a></li>
+</ul>
+<div class="container slide" ui-view></div>
+<hr/>
+<pre ng-cloak>
+      <!-- Here's some values to keep an eye on in the sample in order to understand $state and $stateParams -->
+      $state = {[{$state.current.name}]}
+      $stateParams = {[{$stateParams}]}
+      $state full url = {[{ $state.$current.url.source }]}
+      <!-- $state.$current is not a public api, we are using it to
+           display the full url for learning purposes-->
+</pre>
+<script src="/lib/require.js" data-main="/bundle.js"></script>
+<!-- inject:js -->
+<!-- endinject -->
+</body>
+</html>

@@ -1,0 +1,179 @@
+'use strict';
+
+var gulp = require('gulp'),
+    jshint = require('gulp-jshint'),
+    rjs = require("requirejs"),
+    concat = require('gulp-concat'),
+    rimraf = require('gulp-rimraf'),
+    minifyCSS = require("gulp-minify-css"),
+    sass = require('gulp-sass'),
+    runSequence = require('run-sequence'),
+    notify = require("gulp-notify"),
+    uglify = require('gulp-uglify'),
+    compression = require("compression"),
+    karma = require("gulp-karma"),
+    inject = require("gulp-inject"),
+    autoprefixer = require('gulp-autoprefixer');
+
+// Modules for webserver and livereload
+var express = require('express'),
+    refresh = require('gulp-livereload'),
+    livereload = require('connect-livereload'),
+    livereloadport = 35729,
+    serverport = 5000;
+
+
+var rjsConfig = {
+    mainConfigFile: "build/main.js",
+    optimize: "uglify2",
+    baseUrl: "build",
+    name: "main",
+    out: "build/bundle.js",
+    removeCombined: true,
+    generateSourceMaps: true,
+    preserveLicenseComments: false,
+    findNestedDependencies: true
+}
+
+// Set up an express server (not starting it yet)
+var server = express();
+
+//gzip / deflate
+server.use(compression());
+
+// Add live reload
+server.use(livereload({port: livereloadport}));
+
+// Use our 'build' folder as rootfolder
+server.use(express.static('./build'));
+// Because I like HTML5 pushstate .. this redirects everything back to our index.html
+
+server.all('/*', function (req, res) {
+    res.sendfile('index.html', { root: 'build' });
+});
+
+// Dev task
+gulp.task('dev', function (cb) {
+    runSequence('clean', ['inject', 'lint', 'rjs'], cb);
+});
+
+// Clean task
+gulp.task('clean', function (cb) {
+    return gulp.src("build/*", { read: false })
+        .pipe(rimraf());
+});
+
+// JSHint task
+gulp.task('lint', function () {
+    return gulp.src(['app/*.js', 'app/scripts/*.js'])
+        .pipe(jshint())
+        .pipe(jshint.reporter('default'))
+        .pipe(notify("jsHint ok!"));
+});
+
+
+gulp.task('entry', function () {
+    return gulp.src(['app/*.js'])
+        .pipe(uglify())
+        .pipe(gulp.dest('build'))
+        .pipe(notify("entry ok!"));
+});
+
+gulp.task('libScripts', function () {
+    return gulp.src([<%if(bowerList){ %><%=bowerList%>,<% } %>'bower_components/angular/**.js', 'bower_components/requirejs/**.js', 'bower_components/angular-ui-router/release/**.js'])
+        .pipe(gulp.dest('build/lib'));
+
+});
+
+gulp.task('scripts', ['libScripts'], function () {
+    return gulp.src(['app/scripts/**/*.js'])
+        .pipe(uglify())
+        .pipe(gulp.dest('build/js'))
+        .pipe(notify("scripts ok!"));
+});
+
+gulp.task('test', function () {
+    var files = ["undefined.js"];
+    return gulp.src(files)
+        .pipe(karma({
+            configFile: 'karma.conf.js',
+            action: 'run'
+        }))
+        .pipe(notify("test ok!"));
+});
+
+// Styles task
+gulp.task('styles', ['libStyles'], function () {
+    return gulp.src(['app/styles/*.scss','app/styles/*.css'])
+        // The onerror handler prevents Gulp from crashing when you make a mistake in your SASS
+        .pipe(sass({onError: function (e) {
+            console.log(e);
+        } }))
+        // Optionally add autoprefixer
+        .pipe(autoprefixer('last 2 versions', '> 1%', 'ie 8'))
+        .pipe(minifyCSS({keepBreaks: true}))
+        // These last two should look familiar now :)
+        .pipe(gulp.dest('build/css/'))
+        .pipe(notify("styles ok!"));
+
+});
+
+gulp.task('libStyles', function () {
+    return gulp.src('bower_components/bootstrap/dist/css/*.css')
+        // And put it in the build folder
+        .pipe(gulp.dest('build/lib'))
+        .pipe(notify("libStyles ok!"));
+
+});
+
+// requirejs task
+gulp.task('rjs', ['entry', 'scripts'], function () {
+    rjs.optimize(rjsConfig, function (buildresponse) {
+        console.log("[r.js] requirejs combo files successful");
+    }, function (err) {
+        console.log(err);
+    })
+});
+
+
+// Views task, inject assets to html
+gulp.task('inject', ['styles', 'views'], function () {
+    // Any other view files from app/views
+    var target = gulp.src('app/index.html'),
+        sources = gulp.src(['build/css/*.css','build/lib/*.min.css'], {read: false});
+    return target.pipe(inject(sources, {ignorePath: '/build'}))
+        .pipe(gulp.dest('build/'))
+        .pipe(notify("inject ok!"));
+});
+
+gulp.task('views', function () {
+    return gulp.src('app/views/**/*.html')
+                .pipe(gulp.dest('build/views'));
+});
+
+
+
+gulp.task('watch', ['lint'], function () {
+    // Start webserver
+    server.listen(serverport);
+    // Start live reload
+    refresh.listen(livereloadport);
+
+    // Watch our scripts, and when they change run lint and requirejs
+    gulp.watch(['bower_components/**/*.js', 'bower_components/**/release/*.js', 'app/*.js', 'app/scripts/**/*.js','app/scripts/**/**/*.js'], [
+        'rjs'
+    ]);
+    // Watch our sass files
+    gulp.watch(['app/styles/**/*.scss','app/styles/**/*.css'], [
+        'inject'
+    ]);
+
+    gulp.watch(['app/*.html', 'app/**/*.html'], [
+        'inject'
+    ]);
+
+    gulp.watch('./build/**').on('change', refresh.changed);
+
+});
+
+gulp.task('default', ['dev', 'watch']);

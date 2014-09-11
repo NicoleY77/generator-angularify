@@ -1,0 +1,8 @@
+Description:
+    Creates a new Angular directive
+
+Example:
+    yo angularify:directive thing
+
+    This will create:
+        app/scripts/directives/thing.js
