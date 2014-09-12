@@ -1,7 +1,7 @@
 /**
  * original copyright: Andy Grom (https://github.com/AndyGrom/loadOnDemand)
  * rewrite by: Olivier Combe (https://github.com/ocombe/lazyLoad)
- * rewrite by: necoleYu
+ * edit by: necoleYu
  */
 
 define(["angular"], function (angular) {

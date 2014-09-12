@@ -101,16 +101,27 @@ describe('Angularify generator appPath option', function () {
         var generatorTest = function (generatorType, specType, targetDirectory, scriptNameFn, specNameFn, suffix, done) {
             var angularGenerator;
             var name = 'foo';
+            var fileName = name;
             var deps = [path.join('../..', generatorType)];
             angularGenerator = helpers.createGenerator('angularify:' + generatorType, deps, [name], genOptions);
 
+            if (specType == "service") {
+                fileName += ("." + generatorType);
+            }
             angular.run([], function () {
                 angularGenerator.run([], function () {
                     helpers.assertFileContent([
                         [
-                            path.join(appPath + '/scripts', targetDirectory, name + '.js'),
+                            path.join(appPath + '/scripts', targetDirectory, fileName + '.js'),
                             new RegExp(
                                     generatorType + '\\(\'' + scriptNameFn(name) + suffix + '\'',
+                                'g'
+                            )
+                        ],
+                        [
+                            path.join('test/spec', targetDirectory, fileName + '.spec.js'),
+                            new RegExp(
+                                    'describe\\(\"' + _.classify(specType) + ': ' + specNameFn(name) + suffix + '\"',
                                 'g'
                             )
                         ]

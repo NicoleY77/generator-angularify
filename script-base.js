@@ -107,6 +107,7 @@ Generator.prototype.addScriptToIndex = function (script) {
 
 Generator.prototype.generateSourceAndTest = function (appTemplate, testTemplate, targetDirectory, skipAdd) {
     // Services use classified names
+
     var name = appTemplate && appTemplate.match("service/") ? this.name + "." + appTemplate.replace("service/", "") : this.name;
 
     if (this.generatorName.toLowerCase() === 'service') {

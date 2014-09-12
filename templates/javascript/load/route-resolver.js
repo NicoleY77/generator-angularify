@@ -1,7 +1,7 @@
 define(["angular"], function (angular) {
     /**
      * this service returns a valid route definition object
-     * for the angular route 'when' method
+     * for the angular route 'state' method
      *
      * @type {*|module}
      */
