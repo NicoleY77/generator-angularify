@@ -9,11 +9,10 @@
  */
 
 define(['app', 'angular'], function (app, angular) {
-
     app.controller('<%= classedName %>Ctrl', ["$scope", function ($scope) {
         $scope.title = "<%= classedName %> page"
     }]);
-
-    //also can use angular.module
+    // ...
+    //or use angular.module to create a new module
 });
 

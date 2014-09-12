@@ -2,7 +2,7 @@
 
 define([
     "angular",
-    "js/services/<%= cameledName %>",
+    "js/services/<%= fullTypeName %>",
     "mock"
 ], function (angular, <%= cameledName %>, mock){
 

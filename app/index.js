@@ -108,7 +108,7 @@ Generator.prototype.welcome = function welcome() {
         this.log(yosay(" Welcome to the angularify generator"));
         this.log(
             chalk.magenta(
-                'Out of the box I include angular and angular-ui-router modules '
+                'Out of the box I include Angular, Angular-UI-Router and RequireJS by default'
             )
         );
         this.log(

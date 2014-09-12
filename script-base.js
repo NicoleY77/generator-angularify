@@ -107,12 +107,15 @@ Generator.prototype.addScriptToIndex = function (script) {
 
 Generator.prototype.generateSourceAndTest = function (appTemplate, testTemplate, targetDirectory, skipAdd) {
     // Services use classified names
+    var name = appTemplate && appTemplate.match("service/") ? this.name + "." + appTemplate.replace("service/", "") : this.name;
+
     if (this.generatorName.toLowerCase() === 'service') {
         this.cameledName = this.classedName;
     }
-    this.appTemplate(appTemplate, path.join('scripts', targetDirectory, this.name));
-    this.testTemplate(testTemplate, path.join(targetDirectory, this.name + ".spec"));
+    this.fullTypeName = name;
+    this.appTemplate(appTemplate, path.join('scripts', targetDirectory, name));
+    this.testTemplate(testTemplate, path.join(targetDirectory, name + ".spec"));
     if (!skipAdd) {
-        this.addScriptToIndex(path.join(targetDirectory, this.name));
+        this.addScriptToIndex(path.join(targetDirectory, name));
     }
 };

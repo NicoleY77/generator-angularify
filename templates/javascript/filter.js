@@ -9,10 +9,10 @@
  * Filter in the <%= scriptAppName %>.
  */
 define(['app', 'angular'], function (app, angular) {
-    angular.module('<%= scriptAppName %>')
-        .filter('<%= cameledName %>', function () {
-            return function (input) {
-                return '<%= cameledName %> filter: ' + input;
-            };
-        });
+    app.filter('<%= cameledName %>', function () {
+        return function (input) {
+            return '<%= cameledName %> filter: ' + input;
+        };
+    });
+    // or use angular.module to create a new module
 });

@@ -8,6 +8,6 @@
  * Constant in the <%= scriptAppName %>.
  */
 define(['app', 'angular'], function (app, angular) {
-    angular.module('<%= scriptAppName %>')
-        .constant('<%= cameledName %>', 42);
+    app.constant('<%= cameledName %>', 42);
+    // or use angular.module to create a new module
 });

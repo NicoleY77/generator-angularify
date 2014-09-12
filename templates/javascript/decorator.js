@@ -8,11 +8,11 @@
  * Decorator of the <%= scriptAppName %>
  */
 define(['app', 'angular'], function (app, angular) {
-    angular.module('<%= scriptAppName %>')
-        .config(function ($provide) {
-            $provide.decorator('<%= cameledName %>', function ($delegate) {
-                // decorate the $delegate
-                return $delegate;
-            });
+    app.config(function ($provide) {
+        $provide.decorator('<%= cameledName %>', function ($delegate) {
+            // decorate the $delegate
+            return $delegate;
         });
+    });
+    // or use angular.module to create a new module
 });

@@ -8,6 +8,6 @@
  * Value in the <%= scriptAppName %>.
  */
 define(['app', 'angular'], function (app, angular) {
-    angular.module('<%= scriptAppName %>')
-        .value('<%= cameledName %>', 42);
+    app.value('<%= cameledName %>', 42);
+    // or use angular.module to create a new module
 });
