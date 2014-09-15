@@ -92,7 +92,7 @@ define(["angular"], function (angular) {
 
                         route.templateUrl = viewDir + state + ".html";
 
-                        route.controller = state.charAt(0).toUpperCase() + state.slice(1) + "Ctrl";
+                        route.controller = state.charAt(0).toUpperCase() + state.slice(1) + "Ctrl as " + state;
 
                         route.resolve = angular.extend(route.resolve || {}, {
                             __load__: ['$q', '$rootScope', function ($q, $rootScope) {
