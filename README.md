@@ -252,7 +252,7 @@ only load `require.js` in `index.html` ,  using r.js  bundle everything into one
 <script src="/lib/require.js" data-main="/bundle.js"></script>
 ```
 ## LazyLoad
-With [ocLazyLoad](https://github.com/ocombe/ocLazyLoad) ,  ui-router can lazy load files on demand .  But I wanted to simplify the `state` config  at same time . For instance , if specifying the state name `list`
+With [ocLazyLoad](https://github.com/ocombe/ocLazyLoad) ,  ui-router can lazy load files on demand .  But I wanted to simplify the `stateConfig`  object at same time . For instance , if specifying the state name `list`
 
 ```javascript
 $stateProvider
@@ -263,7 +263,7 @@ $stateProvider
                 })
 ```
 
-Once the `stateChangeStart` event fires and target state name is `list`,  the `templateUrl` and  `controller` of targeted state with the scenario is to define to a given path and name. Then add `load`  to 'resolve' property and assign it a function that  returns a `promise`.  The function can ensure the controller and dependences `files`  are loaded in the proper order. Ultimately the `stateConfig` object will be shown below
+Once the `stateChangeStart` event fires and target state name is `list`,  the `templateUrl` and  `controller` of target state with the scenario is to define to a given path and name. Then add `load`  to `resolve` property and assign it a function that  returns a `promise`.  The function can ensure the controller and dependences `files`  are loaded in the proper order. Ultimately the `stateConfig` object will be shown below
  
 ```javascript
 {
@@ -279,7 +279,7 @@ Once the `stateChangeStart` event fires and target state name is `list`,  the `t
 }
 ```
 
-The dependences file support service, filter and directive,  you just need to add the prefix ( component's feature for short + : ) to the file name
+The dependences file support service, filter and directive,  you just need to add the `prefix `( component's feature for short + : ) to the file name
 
 ```javascript
 files: [
@@ -293,9 +293,9 @@ files: [
  
 *  service:  				`js/services/`
 *  filters:                	`js/filters/`
- * directives: 			`js/directives/`
+* directives: 			`js/directives/`
 
-  If  you assign nothing to the prefix,  default component's feature is service(s:)
+ If  you assign nothing to the prefix,  default component's feature is service(s:)
 
 ## Bower Components
 
