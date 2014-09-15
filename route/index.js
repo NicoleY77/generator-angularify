@@ -57,7 +57,7 @@ Generator.prototype.rewriteAppJs = function () {
         needle: '$stateProvider',
         splicable: [
                 "  url: '/" + _name + "',",
-                "  service: ['firstservice'],",
+                "  files: ['firstservice'],",
                 "  resolve: {}"
         ]
     };

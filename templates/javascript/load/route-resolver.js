@@ -17,6 +17,8 @@ define(["angular"], function (angular) {
              */
             this.routeConfig = (function () {
                 var serviceDirectory = 'js/services/',
+                    directiveDirectory = 'js/directives/',
+                    filterDirectory = 'js/filters/',
                     controllerDirectory = 'js/controllers/',
                     viewsDirectory = 'views/',
 
@@ -26,6 +28,22 @@ define(["angular"], function (angular) {
 
                     getServiceDirectory = function () {
                         return serviceDirectory;
+                    },
+
+                    setDirectiveDirectory = function (directiveDir) {
+                        directiveDirectory = directiveDir + '/';
+                    },
+
+                    getDirectiveDirectory = function () {
+                        return directiveDirectory;
+                    },
+
+                    setFilterDirectory = function (filterDir) {
+                        filterDirectory = filterDir + '/';
+                    },
+
+                    getFilterDirectory = function () {
+                        return filterDirectory;
                     },
 
                     setViewsDirectory = function (viewsDir) {
@@ -49,7 +67,11 @@ define(["angular"], function (angular) {
                     setViewsDirectory: setViewsDirectory,
                     getViewsDirectory: getViewsDirectory,
                     setControllerDirectory: setControllerDirectory,
-                    getControllerDirectory: getControllerDirectory
+                    getControllerDirectory: getControllerDirectory,
+                    setDirectiveDirectory: setDirectiveDirectory,
+                    getDirectiveDirectory: getDirectiveDirectory,
+                    setFilterDirectory: setFilterDirectory,
+                    getFilterDirectory: getFilterDirectory
                 };
             }());
 
@@ -62,7 +84,7 @@ define(["angular"], function (angular) {
                         // if loader provide check(), then check it
 
 
-                        var services = route.service;
+                        var files = route.files;
 
                         var state = route.name,
                             viewDir = routeConfig.getViewsDirectory() + state + "/",
@@ -84,11 +106,20 @@ define(["angular"], function (angular) {
                                 /**
                                  * add services to dependencies array
                                  */
-                                if (services) {
-                                    var service;
-                                    for (service in services) {
-                                        if (services.hasOwnProperty(service)) {
-                                            dependencies.push(routeConfig.getServiceDirectory() + services[service] + '.js');
+                                if (files) {
+                                    var file, dir, dirConfig = {
+                                        "f:": "Filter",
+                                        "s:": "Service",
+                                        "d:": "Directive"
+                                    };
+                                    for (var i = 0; i < files.length; i++) {
+                                        file = files[i];
+                                        if (file.match(/([f|s|d]:)?([0-9A-Za-z]+)/gi)) {
+                                            dir = RegExp.$1 || 's:';
+                                            file = RegExp.$2;
+                                            if (dir && file) {
+                                                dependencies.push(routeConfig['get' + dirConfig[dir] + 'Directory']() + file + '.js');
+                                            }
                                         }
                                     }
                                 }

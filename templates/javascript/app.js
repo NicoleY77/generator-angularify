@@ -67,7 +67,7 @@ define(["angular","uiRouter", "routeResolver", "lazyLoad"<% if(dependenceConfig)
                 })
                 .state('about', {
                     url: '/about',
-                    service: ['firstservice'],
+                    files: ['firstservice'],
                     resolve: {} //the default value  {}
                 })
         }]);
