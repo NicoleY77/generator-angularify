@@ -1,7 +1,6 @@
 'use strict';
 var util = require('util');
 var path = require('path');
-var fs = require('fs');
 var yeoman = require('yeoman-generator');
 var yosay = require('yosay');
 var chalk = require('chalk');
@@ -9,9 +8,11 @@ var angularUtils = require("../util");
 
 
 var Generator = function Generator(args, options) {
+
     yeoman.generators.Base.apply(this, arguments);
 
-    this.argument('appname', { type: String, required: false });
+    this.argument('appname', {type: String, required: false });
+
     this.appname = this.appname || path.basename(process.cwd());
 
     this.appname = this._.camelize(this._.slugify(this._.humanize(this.appname)));
@@ -85,7 +86,6 @@ var Generator = function Generator(args, options) {
         as: "controller",
         args: ["home"]
     });
-
 
     this.on('end', function () {
         this.installDependencies({

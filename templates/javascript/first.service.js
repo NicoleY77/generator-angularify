@@ -2,13 +2,13 @@
 
 /**
  * @ngdoc service
- * @name <%= scriptAppName %>.firstservice
+ * @name <%= scriptAppName %>.first
  * @description
- * # firstservice
+ * # first
  * Service in the <%= scriptAppName %>.
  */
 define(['app', 'angular'], function (app, angular) {
-    app.service('firstservice', function firstservice() {
+    app.service('first', function first() {
         this.greet = "Hello From Greet Module";
         this.getGreet = function () {
             return this.greet;

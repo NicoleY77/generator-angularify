@@ -46,7 +46,7 @@ Generator.prototype.createAppFile = function createAppFile() {
     copy('scripts/load/route-resolver.js', 'load/route-resolver.js');
 
     copy('scripts/controllers/about/about.js', 'about.js');
-    copy('scripts/services/firstservice.js', 'firstservice.js');
+    copy('scripts/services/first.service.js', 'first.service.js');
 
 
 };

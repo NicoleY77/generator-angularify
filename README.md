@@ -92,7 +92,7 @@ Produces controller and view as above and populate state to `app/app.js`
 $stateProvider
                 .state('my.route', {
                   url: '/myroute',
-                  files: 'firstservice',
+                  files: 'first.service',
                   resolve: {}
                 })
 ```
@@ -279,7 +279,7 @@ With [ocLazyLoad](https://github.com/ocombe/ocLazyLoad) ,  ui-router can load fi
 $stateProvider
                 .state('list', {
                   url: '/list',
-                  files: ['firstservice'],
+                  files: ['first.service'],
                   resolve: {}
                 })
 ```

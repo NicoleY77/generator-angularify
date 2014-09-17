@@ -10,9 +10,9 @@
 
 define(['app', 'angular'], function (app, angular) {
 
-    app.controller('AboutCtrl', ["$scope", "firstservice", function ($scope, firstservice) {
-        $scope.title = "About page"
-        $scope.sayHello = firstservice.getGreet();
+    app.controller('AboutCtrl', ["$scope", "first", function ($scope, first) {
+        $scope.title = "About page";
+        $scope.sayHello = first.getGreet();
     }]);
 
     //also can use angular.module
