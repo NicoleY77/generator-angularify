@@ -92,7 +92,7 @@ Produces controller and view as above and populate state to `app/app.js`
 $stateProvider
                 .state('my.route', {
                   url: '/myroute',
-                  files: { s : 'firstservice' },
+                  files: 'firstservice',
                   resolve: {}
                 })
 ```
@@ -227,7 +227,7 @@ By default, `new css` are added to the index.html file.
 
 To integrate AngularJS and Requirejs :
 
-*  Define config in `main.js`,   all dependencies are in `build`
+*  Define config in `main.js`,   all dependencies are in `build` directory
 
 ```javascript
 require.config({
@@ -249,7 +249,7 @@ require.config({
 });
 ```
 
-*  ```r.js```  is the RequireJS optimizer , which can combine the modules that are specifies in the build profile's file  ,  just like so:
+*  ```r.js```  is the RequireJS optimizer , which can combine the modules that are specifies in the build profile's file  ,  just like this:
 
 ```javascript
 {
@@ -266,7 +266,7 @@ require.config({
 ```
 
 
-* Only load `require.js` in `index.html` ,  the  `data-main`  is set to  `bundle.js` , which is  the output  bundle the above files
+* Only load `require.js` in `index.html` ,  the  `data-main`  is set to  `bundle.js` , which is  the output  file bundle all above files
 
 ```html
 <script src="/lib/require.js" data-main="/bundle.js"></script>
@@ -279,7 +279,7 @@ With [ocLazyLoad](https://github.com/ocombe/ocLazyLoad) ,  ui-router can load fi
 $stateProvider
                 .state('list', {
                   url: '/list',
-                  files: { s :'firstservice' },
+                  files: ['firstservice'],
                   resolve: {}
                 })
 ```

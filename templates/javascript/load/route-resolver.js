@@ -106,20 +106,21 @@ define(["angular"], function (angular) {
                                 /**
                                  * add services to dependencies array
                                  */
+                                if (angular.isArray(files) || typeof files == 'string') {
+                                    files = {s: files};
+                                }
                                 if (files) {
-                                    var file, dir, dirConfig = {
-                                        "f:": "Filter",
-                                        "s:": "Service",
-                                        "d:": "Directive"
+                                    var dirConfig = {
+                                        "f": "Filter",
+                                        "s": "Service",
+                                        "d": "Directive"
                                     };
-                                    for (var i = 0; i < files.length; i++) {
-                                        file = files[i];
-                                        if (file.match(/([f|s|d]:)?([0-9A-Za-z]+)/gi)) {
-                                            dir = RegExp.$1 || 's:';
-                                            file = RegExp.$2;
-                                            if (dir && file) {
-                                                dependencies.push(routeConfig['get' + dirConfig[dir] + 'Directory']() + file + '.js');
-                                            }
+                                    for (var i in files) {
+                                        var dir = routeConfig['get' + dirConfig[i] + 'Directory']();
+                                        var _temp = files[i];
+                                        files[i] = angular.isArray(_temp) ? _temp : [_temp];
+                                        for (var j in files[i]) {
+                                            dependencies.push(dir + files[i][j] + '.js');
                                         }
                                     }
                                 }
