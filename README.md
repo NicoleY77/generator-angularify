@@ -92,7 +92,7 @@ Produces controller and view as above and populate state to `app/app.js`
 $stateProvider
                 .state('my.route', {
                   url: '/myroute',
-                  files: ['firstservice'],
+                  files: { s : 'firstservice' },
                   resolve: {}
                 })
 ```
@@ -220,12 +220,14 @@ todo
 todo
 
 ### Add to Index
+
 By default, `new css` are added to the index.html file.  
 
 ## Optimizing JavaScript
-`r.js`is an optimizing tool for RequireJS ,  how to integrate AngularJS and Requirejs .
 
-Define config in `main.js`,   all dependencies are in `build`
+To integrate AngularJS and Requirejs :
+
+*  Define config in `main.js`,   all dependencies are in `build`
 
 ```javascript
 require.config({
@@ -246,24 +248,50 @@ require.config({
     }
 });
 ```
-only load `require.js` in `index.html` ,  using r.js  bundle everything into one file named `bundle.js` 
+
+*  ```r.js```  is the RequireJS optimizer , which can combine the modules that are specifies in the build profile's file  ,  just like so:
+
+```javascript
+{
+    mainConfigFile: "build/main.js",
+    optimize: "uglify2",
+    baseUrl: "build",
+    name: "main",
+    out: "build/bundle.js",  //output file
+    removeCombined: true,
+    generateSourceMaps: true,
+    preserveLicenseComments: false,
+    findNestedDependencies: true
+}
+```
+
+
+* Only load `require.js` in `index.html` ,  the  `data-main`  is set to  `bundle.js` , which is  the output  bundle the above files
 
 ```html
 <script src="/lib/require.js" data-main="/bundle.js"></script>
 ```
+
 ## LazyLoad
-With [ocLazyLoad](https://github.com/ocombe/ocLazyLoad) ,  ui-router can lazy load files on demand .  But I wanted to simplify the `stateConfig`  object at same time . For instance , if specifying the state name `list`
+With [ocLazyLoad](https://github.com/ocombe/ocLazyLoad) ,  ui-router can load files on demand.  It's also possibe to simplify the `stateConfig` object like this:
 
 ```javascript
 $stateProvider
                 .state('list', {
                   url: '/list',
-                  files: ['firstservice'],
+                  files: { s :'firstservice' },
                   resolve: {}
                 })
 ```
 
-Once the `stateChangeStart` event fires and target state name is `list`,  the `templateUrl` and  `controller` of target state with the scenario is to define to a given path and name. Then add `load`  to `resolve` property and assign it a function that  returns a `promise`.  The function can ensure the controller and dependences `files`  are loaded in the proper order. Ultimately the `stateConfig` object will be shown below
+Once the `stateChangeStart` event fires and target state name is `list`,  the `templateUrl` and  `controller` of target state is assigned a given directory and file name. 
+
+```javascript
+	controller:"ListCtrl as list",
+	templateUrl:"views/list/list.html"
+```
+
+Then `load`  function in the `resolve` object returns a `promise`, which ensures the controller and dependences `files`  are loaded in the proper order. Finally the `stateConfig` object looks like this:
  
 ```javascript
 {
@@ -279,23 +307,15 @@ Once the `stateChangeStart` event fires and target state name is `list`,  the `t
 }
 ```
 
-The dependences file support service, filter and directive,  you just need to add the `prefix `( component's feature for short + : ) to the file name
+The dependences file can include services, filters and directives. 
 
 ```javascript
-files: [
-	s:	serviceFileName, //service
-	f:	filterFileName,  //filter
-	d:	directiveFileName //directive
-]
+files: {
+	s:	"serviceFileName", //service, defaults to "js/services/"
+	f:	["filterFileOne","filterFileOne"],  //filter, defaults to  "js/filters/"
+	d:	["directiveFileName"] //directive, defaults to "js/directives/"
+}
 ```
-
- which defaults to the  follwing directories :
- 
-*  service:  				`js/services/`
-*  filters:                	`js/filters/`
-* directives: 			`js/directives/`
-
- If  you assign nothing to the prefix,  default component's feature is service(s:)
 
 ## Bower Components
 
