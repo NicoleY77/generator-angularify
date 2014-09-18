@@ -20,6 +20,7 @@
         "gulp-karma": "^0.0.4",
         "gulp-util": "^3.0.0",
         "gulp-inject":"~1.0.2",
+        "gulp-ng-annotate":"^0.3.2",
         "run-sequence": "^0.3.6",
         "requirejs": "^2.1.14",
         "karma": "^0.12.23",

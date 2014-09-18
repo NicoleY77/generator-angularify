@@ -21,7 +21,7 @@ Run `yo angularify`, optionally passing an app name:
 yo angularify [app-name]
 ```
 
-Run `gulp` for building  , then run `gulp server` for preview
+Run `gulp` for building  and  `gulp server` for preview
 
 ## Generators
 
@@ -217,7 +217,7 @@ In general, these options can be applied to any generator, though they only affe
 todo
 
 ### Minification Safe
-todo
+Add angularjs dependency injection annotations with `gulp-ng-annotate`
 
 ### Add to Index
 
@@ -345,6 +345,9 @@ Yeoman generated projects can be further tweaked according to your needs by modi
 Running `gulp test` will run the unit tests with karma.
 
 ## Changelog
+* 0.0.2
+	*  minification safe
+	*  add gulp server task
 
 ## Reference
 * [angularjs-styleguide](https://github.com/johnpapa/angularjs-styleguide) 

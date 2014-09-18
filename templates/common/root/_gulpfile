@@ -14,6 +14,7 @@ var gulp = require('gulp'),
     karma = require("gulp-karma"),
     inject = require("gulp-inject"),
     exec = require('child_process').exec,
+    annotate = require('gulp-ng-annotate'),
     autoprefixer = require('gulp-autoprefixer');
 
 // Modules for webserver and livereload
@@ -75,9 +76,11 @@ gulp.task('lint', function () {
 
 gulp.task('entry', function () {
     return gulp.src(['app/*.js'])
-        .pipe(uglify())
-        .pipe(gulp.dest('build'))
-        .pipe(notify("entry ok!"));
+            .pipe(annotate())
+            .pipe(gulp.dest('app'))
+            .pipe(uglify())
+            .pipe(gulp.dest('build'))
+            .pipe(notify("entry ok!"));
 });
 
 gulp.task('libScripts', function () {
@@ -87,10 +90,12 @@ gulp.task('libScripts', function () {
 });
 
 gulp.task('scripts', ['libScripts'], function () {
-    return gulp.src(['app/scripts/**/*.js'])
-        .pipe(uglify())
-        .pipe(gulp.dest('build/js'))
-        .pipe(notify("scripts ok!"));
+    return gulp.src(['app/scripts/**/*.js','app/scripts/**/**/*.js'])
+            .pipe(annotate())
+            .pipe(gulp.dest('app/scripts'))
+            .pipe(uglify())
+            .pipe(gulp.dest('build/js'))
+            .pipe(notify("scripts ok!"));
 });
 
 gulp.task('test', function () {
@@ -182,11 +187,11 @@ gulp.task('watch', ['lint'], function () {
 });
 
 gulp.task('server', function () {
-    exec('open "http://localhost:5000" -a "Google Chrome"', function (er) {
+    exec('open "http://localhost:'+ serverport +'" -a "Google Chrome"', function (er) {
         if (er) {
             console.log(er)
         } else {
-            console.log("the preview url:  http://localhost:5000");
+            console.log("the preview url:  http://localhost:" + serverport);
         }
     });
 });
