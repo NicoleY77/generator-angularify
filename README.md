@@ -21,7 +21,7 @@ Run `yo angularify`, optionally passing an app name:
 yo angularify [app-name]
 ```
 
-Run `gulp` for building  and navigate to `http://localhost:5000` for preview
+Run `gulp` for building  , then run `gulp server` for preview
 
 ## Generators
 

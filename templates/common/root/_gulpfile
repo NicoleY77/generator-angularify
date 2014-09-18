@@ -13,6 +13,7 @@ var gulp = require('gulp'),
     compression = require("compression"),
     karma = require("gulp-karma"),
     inject = require("gulp-inject"),
+    exec = require('child_process').exec,
     autoprefixer = require('gulp-autoprefixer');
 
 // Modules for webserver and livereload
@@ -178,6 +179,16 @@ gulp.task('watch', ['lint'], function () {
 
     gulp.watch('./build/**').on('change', refresh.changed);
 
+});
+
+gulp.task('server', function () {
+    exec('open "http://localhost:5000" -a "Google Chrome"', function (er) {
+        if (er) {
+            console.log(er)
+        } else {
+            console.log("the preview url:  http://localhost:5000");
+        }
+    });
 });
 
 gulp.task('default', ['dev', 'watch']);
