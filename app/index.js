@@ -17,7 +17,6 @@ var Generator = function Generator(args, options) {
 
     this.appname = this._.camelize(this._.slugify(this._.humanize(this.appname)));
 
-
     this.option('app-suffix', {
         desc: 'Allow a custom suffix to be added to the module name',
         type: String,
@@ -86,6 +85,7 @@ var Generator = function Generator(args, options) {
         as: "controller",
         args: ["home"]
     });
+
 
     this.on('end', function () {
         this.installDependencies({

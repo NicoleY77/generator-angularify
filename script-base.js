@@ -15,8 +15,15 @@ var Generator = module.exports = function Generator() {
     this.appname = this._.slugify(this._.humanize(this.appname));
     this.scriptAppName = this._.camelize(this.appname) + angularUtils.appName(this);
 
+    this.fullName = this.name;
+    var _name = this.name;
+    _name = _name.split("/");
+    this.name = _name[_name.length - 1];
+
     this.cameledName = this._.camelize(this.name);
     this.classedName = this._.classify(this.name);
+
+    this.pathLink = ~this.name.indexOf("/") ? _name.slice(0, _name.length - 1).join("/") : '';
 
     if (typeof this.env.options.appPath === 'undefined') {
         this.env.options.appPath = this.options.appPath;
@@ -105,18 +112,27 @@ Generator.prototype.addScriptToIndex = function (script) {
     }
 };
 
-Generator.prototype.generateSourceAndTest = function (appTemplate, testTemplate, targetDirectory, skipAdd) {
+Generator.prototype.generateSourceAndTest = function (appTemplate, testTemplate, targetDirectory, absolutePath) {
     // Services use classified names
 
-    var name = appTemplate && appTemplate.match("service/") ? this.name + "." + appTemplate.replace("service/", "") : this.name;
+    var name, type, linkPath = this.pathLink;
 
-    if (this.generatorName.toLowerCase() === 'service') {
-        this.cameledName = this.classedName;
+    name = appTemplate && appTemplate.match("service/") ? this.fullName + "." + appTemplate.replace("service/", "") : this.fullName;
+
+    type = targetDirectory;
+
+    if (absolutePath) {
+        targetDirectory = "";
+    } else {
+        linkPath = type + "/" + linkPath;
     }
-    this.fullTypeName = name;
+    console.log("*************" + linkPath);
+
+    linkPath += name;
+
+    console.log("*************" + linkPath);
+    this.pathLink = linkPath;
     this.appTemplate(appTemplate, path.join('scripts', targetDirectory, name));
     this.testTemplate(testTemplate, path.join(targetDirectory, name + ".spec"));
-    if (!skipAdd) {
-        this.addScriptToIndex(path.join(targetDirectory, name));
-    }
+//  this.addScriptToIndex(path.join(targetDirectory, name));
 };

@@ -73,15 +73,21 @@ Generator.prototype.askForNewName = function askForNewName() {
 
         this.prompt(prompts, function (props) {
             this.fileName = props.decoratorName;
-
             cb();
         }.bind(this));
     }
 };
 
 Generator.prototype.createDecoratorFiles = function createDecoratorFiles() {
+    var absolutePath = this.options['ab'], destination;
+    if (absolutePath) {
+        destination = this.fileName;
+    } else {
+        destination = path.join('scripts', buildRelativePath(this.fileName));
+    }
+
     this.appTemplate(
         'decorator',
-        path.join('scripts', buildRelativePath(this.fileName))
+        destination
     );
 };

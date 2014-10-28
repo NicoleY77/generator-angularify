@@ -346,8 +346,14 @@ Running `gulp test` will run the unit tests with karma.
 
 ## Changelog
 * 0.0.2
-	*  minification safe
-	*  add gulp server task
+	* minification safe
+	* add gulp server task
+
+* 0.0.3
+    * package.json update
+
+* 0.0.4
+    *
 
 ## Reference
 * [angularjs-styleguide](https://github.com/johnpapa/angularjs-styleguide) 

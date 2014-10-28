@@ -2,7 +2,7 @@
 
 define([
     "angular",
-    "js/controllers/<%= cameledName %>/<%= cameledName %>",
+    "js/<%= pathLink %>",
     "mock"
 ], function (angular, <%= cameledName %>, mock){
 

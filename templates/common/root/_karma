@@ -14,9 +14,13 @@ module.exports = function (config) {
 
         files: [
             {pattern: 'build/js/**/**/*.<%= jsExt %>', included: false},
+            {pattern: 'build/js/**/*.<%= jsExt %>', included: false},
+            {pattern: 'build/js/*.<%= jsExt %>', included: false},
             {pattern: 'build/lib/*.<%= jsExt %>', included: false},
             {pattern: 'build/*.<%= jsExt %>', included: false},
             {pattern: 'test/spec/**/**/*.spec.<%= jsExt %>', included: false},
+            {pattern: 'test/spec/**/*.spec.<%= jsExt %>', included: false},
+            {pattern: 'test/spec/*.spec.<%= jsExt %>', included: false},
             'test/test-main.js'
         ],
 

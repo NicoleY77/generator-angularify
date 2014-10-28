@@ -11,7 +11,6 @@ var Generator = module.exports = function Generator() {
     if (this.name && this.name.toLowerCase() !== 'ctrl' && this.name.substr(-4).toLowerCase() === 'ctrl') {
         this.name = this.name.slice(0, -4);
     }
-    this.options['skip-add'] = true;
 };
 
 util.inherits(Generator, ScriptBase);
@@ -20,7 +19,7 @@ Generator.prototype.createControllerFiles = function createControllerFiles() {
     this.generateSourceAndTest(
         'controller',
         'spec/controller',
-        this.name.match(/\//) ? 'controllers' : 'controllers/' + this.name,
-        this.options['skip-add'] || false
+        'controllers',
+        this.options['ab']
     );
 };
