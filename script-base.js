@@ -126,11 +126,9 @@ Generator.prototype.generateSourceAndTest = function (appTemplate, testTemplate,
     } else {
         linkPath = type + "/" + linkPath;
     }
-    console.log("*************" + linkPath);
 
     linkPath += name;
 
-    console.log("*************" + linkPath);
     this.pathLink = linkPath;
     this.appTemplate(appTemplate, path.join('scripts', targetDirectory, name));
     this.testTemplate(testTemplate, path.join(targetDirectory, name + ".spec"));

@@ -108,6 +108,8 @@ describe('Angularify generator appPath option', function () {
             if (specType == "service") {
                 fileName += ("." + generatorType);
             }
+
+
             angular.run([], function () {
                 angularGenerator.run([], function () {
                     helpers.assertFileContent([
@@ -150,7 +152,7 @@ describe('Angularify generator appPath option', function () {
         });
 
         it('should generate a new service', function (done) {
-            generatorTest('service', 'service', 'services', _.capitalize, _.capitalize, '', done);
+            generatorTest('service', 'service', 'services', _.camelize, _.camelize, '', done);
         });
     });
 

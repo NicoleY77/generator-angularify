@@ -149,7 +149,7 @@ describe('Angularify generator', function () {
         });
 
         it('should generate a new service', function (done) {
-            generatorTest('service', 'service', 'services', _.capitalize, _.capitalize, '', done);
+            generatorTest('service', 'service', 'services', _.camelize, _.camelize, '', done);
         });
     });
 

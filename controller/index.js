@@ -19,7 +19,7 @@ Generator.prototype.createControllerFiles = function createControllerFiles() {
     this.generateSourceAndTest(
         'controller',
         'spec/controller',
-        'controllers',
+        this.name.match(/\//) ? 'controllers' : 'controllers/' + this.name,
         this.options['ab']
     );
 };
